@@ -1,0 +1,17 @@
+@font-face {
+  font-family: 'Digital-Dismay';
+  font-weight: bold;
+  src: url('/src/assets/fonts/digitalDismay.otf') format('opentype');
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}

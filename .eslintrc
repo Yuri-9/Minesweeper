@@ -1,0 +1,80 @@
+{
+  "extends": [
+    "react-app",
+    "react-app/jest",
+    "plugin:react/recommended",
+    "plugin:react-hooks/recommended",
+    "plugin:jsx-a11y/recommended",
+    "plugin:prettier/recommended"
+  ],
+  "env": {
+    "browser": true,
+    "es6": true,
+    "jest": true,
+    "node": true
+  },
+  "ignorePatterns": ["*.json"],
+  "globals": {
+    "FS": false
+  },
+  "rules": {
+    "import/no-anonymous-default-export": 0,
+    "yoda": "error",
+    "no-cond-assign": "error",
+    "no-console": [
+      "error",
+      {
+        "allow": ["error", "log"]
+      }
+    ],
+    "no-use-before-define": 0,
+
+    "max-classes-per-file": ["error", 4],
+
+    "prettier/prettier": [
+      "error",
+      {
+        "printWidth": 140,
+        "endOfLine": "auto"
+      },
+      {
+        "usePrettirrc": true
+      }
+    ],
+
+    "import/order": [
+      "error",
+      {
+        "groups": ["external", "builtin", "internal"],
+        "pathGroups": [
+          {
+            "pattern": "@**/**",
+            "group": "external",
+            "position": "before"
+          },
+          {
+            "pattern": "react",
+            "group": "external",
+            "position": "before"
+          },
+          {
+            "pattern": "*",
+            "group": "external",
+            "position": "after"
+          },
+          {
+            "pattern": "**/*",
+            "group": "internal",
+            "position": "after"
+          }
+        ],
+        "pathGroupsExcludedImportTypes": ["react"],
+        "newlines-between": "always",
+        "alphabetize": {
+          "order": "asc",
+          "caseInsensitive": true
+        }
+      }
+    ]
+  }
+}

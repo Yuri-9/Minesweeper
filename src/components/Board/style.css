@@ -1,0 +1,12 @@
+.board {
+  display: flex;
+  width: min-content;
+  gap: 2px;
+  flex-wrap: wrap;
+  background-color: #d8d5d5;
+}
+
+.board_row {
+  display: flex;
+  gap: 2px;
+}
