@@ -1,21 +1,23 @@
+import './style.css';
+import Control from '../../common/control';
 import { Board } from '../Board/Board';
 import { Menu } from '../Menu/Menu';
 
 export class Game {
   private board: Board;
   private menu: Menu;
-  private parentNode: HTMLElement;
+  private wrapper: Control;
 
   private isPlayGame: boolean;
   private startGameHandler: () => void;
 
   constructor(parentNode: HTMLElement) {
-    this.parentNode = parentNode;
-    this.menu = new Menu(parentNode, () => this.reset());
+    this.wrapper = new Control(parentNode, 'div', 'main');
+    this.menu = new Menu(this.wrapper.node, () => this.reset());
   }
 
   init() {
-    this.board = new Board(this.parentNode, this.gameOver, this.handleChangeMarkedMines);
+    this.board = new Board(this.wrapper.node, this.gameOver, this.handleChangeMarkedMines);
     this.startGameHandler = () => {
       this.start();
     };

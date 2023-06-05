@@ -24,7 +24,8 @@ export class Cell extends Control {
     public row: number,
     public column: number,
     public onOpen: (row: number, column: number) => void,
-    public onMarkMine: (e: MouseEvent, row: number, column: number) => void
+    public onMarkMine: (e: MouseEvent | KeyboardEvent, row: number, column: number) => void,
+    public onMoveFocus: (newRow: number, newColumn: number) => void
   ) {
     super(parentNode, 'button', 'cell');
 
@@ -82,12 +83,32 @@ export class Cell extends Control {
     }
   }
 
-  // handleRightClick(e: MouseEvent) {
-  //   e.preventDefault();
-  // }
+  private keydownHandler = (e: KeyboardEvent) => {
+    switch (e.code) {
+      case 'Space':
+        this.onMarkMine(e, this.row, this.column);
+        break;
+      case 'ArrowRight':
+        this.onMoveFocus(this.row, this.column + 1);
+        break;
+      case 'ArrowLeft':
+        this.onMoveFocus(this.row, this.column - 1);
+        break;
+      case 'ArrowUp':
+        this.onMoveFocus(this.row - 1, this.column);
+        break;
+      case 'ArrowDown':
+        this.onMoveFocus(this.row + 1, this.column);
+        break;
+
+      default:
+        break;
+    }
+  };
 
   init() {
     this.node.addEventListener('click', () => this.onOpen(this.row, this.column));
+    this.node.addEventListener('keydown', this.keydownHandler);
     this.node.addEventListener('contextmenu', (e) => this.onMarkMine(e, this.row, this.column));
   }
 }

@@ -102,10 +102,10 @@ export class Board extends Control {
     this.openCell(row, column);
   };
 
-  markMine = (e: MouseEvent, row: number, column: number) => {
+  markMine = (row: number, column: number) => {
     const cell = this.cells[row]?.[column];
 
-    if (this.mines) {
+    if (this.mines && !cell.isOpen) {
       cell.markMine();
       this.mines = cell.hasFlag ? this.mines - 1 : this.mines + 1;
       this.onChangeMarkedMines(this.mines);
@@ -118,10 +118,10 @@ export class Board extends Control {
     }
   };
 
-  handleMarkMine = (e: MouseEvent, row: number, column: number) => {
+  handleMarkMine = (e: MouseEvent | KeyboardEvent, row: number, column: number) => {
     this.steps++;
     e.preventDefault();
-    this.markMine(e, row, column);
+    this.markMine(row, column);
   };
 
   checkIsWin(): boolean {
@@ -147,6 +147,11 @@ export class Board extends Control {
     }
   }
 
+  private handleMoveFocus = (newRow: number, newColumn: number) => {
+    const cell = this.cells[newRow]?.[newColumn];
+    cell && cell.node.focus();
+  };
+
   create(size = DEFAULT_SIZE, mines = DEFAULT_MINES) {
     this.size = size;
     this.mines = mines;
@@ -154,7 +159,7 @@ export class Board extends Control {
       const row = new Control(this.node, 'div', 'board_row');
       this.cells[i] = [];
       for (let j = 0; j < size; j++) {
-        const cell = new Cell(row.node, i, j, this.handleOpenCell, this.handleMarkMine);
+        const cell = new Cell(row.node, i, j, this.handleOpenCell, this.handleMarkMine, this.handleMoveFocus);
 
         this.cells[i].push(cell);
       }
